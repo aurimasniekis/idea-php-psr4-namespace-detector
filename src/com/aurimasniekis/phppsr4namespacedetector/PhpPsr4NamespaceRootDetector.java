@@ -1,6 +1,7 @@
 package com.aurimasniekis.phppsr4namespacedetector;
 
 import com.intellij.json.psi.*;
+import com.intellij.notification.NotificationListener;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
@@ -115,6 +116,16 @@ public class PhpPsr4NamespaceRootDetector {
 
     public static void processNamespaces(Project project, Set<PhpNamespaceRootInfo> roots) {
         VirtualFile composerFile = project.getBaseDir().findChild("composer.json");
+
+        if (composerFile == null) {
+            PhpPsr4NamespaceNotifier.showNotificationByMessageId(
+                    project,
+                    "actions.detect.namespace.roots.no.composer.json.detected",
+                    (NotificationListener)null
+            );
+
+            throw new ProcessCanceledException();
+        }
 
         JsonFile psiFile = (JsonFile) PsiManager.getInstance(project).findFile(composerFile);
 
