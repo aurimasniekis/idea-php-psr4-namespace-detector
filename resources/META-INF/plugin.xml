@@ -1,0 +1,33 @@
+<idea-plugin>
+  <id>com.aurimasniekis.phppsr4namespacedetector</id>
+  <name>PHP PSR-4 Namespace Detector</name>
+  <version>1.0.0</version>
+  <vendor email="aurimas@niekis.lt" url="https://aurimas@niekis.lt">Aurimas Niekis</vendor>
+
+  <description><![CDATA[
+      Adds detection of PSR-4 Namespace prefixes based on <i>composer.json</i> properties: <i>autoload</i>, <i>autoload-dev</i>
+    ]]></description>
+
+  <change-notes><![CDATA[
+    ]]>
+  </change-notes>
+
+  <idea-version since-build="145.0"/>
+
+  <depends>com.jetbrains.php</depends>
+  <depends>com.intellij.modules.platform</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <directoryProjectConfigurator implementation="com.aurimasniekis.phppsr4namespacedetector.PhpSourceDirectoryConfigurator"/>
+  </extensions>
+
+  <actions>
+    <action id="PhpDetectPsr4Roots"
+            class="com.aurimasniekis.phppsr4namespacedetector.PhpDetectPsr4NamespaceRootAction"
+            text="Detect PSR-4 Namespace Roots"
+            description="Will detect PSR-4 namespace roots">
+      <add-to-group group-id="InspectCodeGroup" anchor="after" relative-to-action="PhpDetectPsroRoots"/>
+    </action>
+  </actions>
+
+</idea-plugin>
